@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARBANKR ATM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
+    <link rel="stylesheet" href="styles.css">
+</head>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-university"></i> STARBANK ATM</h1>
+            <p>¡Bienvenido a StarBank, su banco de confianza!</p>
+        </header>
+
+        <main id="main-content">
+            <section id="login" class="card">
+                <h2><i class="fas fa-user-lock"></i> Iniciar Sesión</h2>
+                <div>
+                    <label for="numeroTarjeta">Número de Tarjeta</label>
+                    <input type="text" id="numeroTarjeta" placeholder="Número de Tarjeta" required>
+                </div>
+                <div>
+                    <label for="pin">PIN</label>
+                    <input type="password" id="pin" placeholder="PIN" required minlength="4" maxlength="4">
+                </div>
+                <button onclick="verificarPin()">
+                    <i class="fas fa-sign-in-alt"></i> Ingresar
+                </button>
+            </section>
+
+            <section id="bienvenida" class="card" style="display: none;">
+                <h2><i class="fas fa-handshake"></i> Bienvenido, <span id="nombreUsuario"></span></h2>
+                <div>
+                    <button onclick="volverOperaciones()">
+                        <i class="fas fa-home"></i> Menú Principal
+                    </button>
+                    <button onclick="cerrarSesion()">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </section>
+
+            <section id="operaciones" class="card" style="display: none;">
+                <h2><i class="fas fa-cogs"></i> Operaciones</h2>
+                <div class="grid-menu">
+                    <button onclick="mostrarSaldo()">
+                        <i class="fas fa-wallet"></i> Consultar Saldo
+                    </button>
+                    <button onclick="mostrarRetiro()">
+                        <i class="fas fa-money-bill-wave"></i> Retirar Efectivo
+                    </button>
+                    <button onclick="mostrarDeposito()">
+                        <i class="fas fa-plus-circle"></i> Depositar Efectivo
+                    </button>
+                    <button onclick="mostrarPagoTarjeta()">
+                        <i class="fas fa-credit-card"></i> Pago Tarjeta de Crédito
+                    </button>
+                    <button onclick="mostrarPagoServicio()">
+                        <i class="fas fa-tools"></i> Pago de Servicios
+                    </button>
+                    <button onclick="mostrarCreditoEducativo()">
+                        <i class="fas fa-graduation-cap"></i> Crédito Educativo
+                    </button>
+                    <button onclick="mostrarTransacciones()">
+                        <i class="fas fa-history"></i> Historial de Transacciones
+                    </button>
+                    <button onclick="mostrarComprobante()">
+                        <i class="fas fa-print"></i> Imprimir Comprobante
+                    </button>
+                    <button onclick="cerrarSesion()">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </section>
+
+            <section id="saldo" class="card" style="display: none;">
+                <h2><i class="fas fa-balance-scale"></i> Saldo Actual</h2>
+                <p id="saldoActual" class="saldo-display"></p>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="retiro" class="card" style="display: none;">
+                <h2><i class="fas fa-money-bill-wave"></i> Retirar Efectivo</h2>
+                <div>
+                    <label for="montoRetiro">Monto a retirar</label>
+                    <input type="number" id="montoRetiro" placeholder="Monto a retirar" required>
+                </div>
+                <button onclick="realizarRetiro()">
+                    <i class="fas fa-check"></i> Retirar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="deposito" class="card" style="display: none;">
+                <h2><i class="fas fa-plus-circle"></i> Depositar Efectivo</h2>
+                <div>
+                    <label for="montoDeposito">Monto a depositar</label>
+                    <input type="number" id="montoDeposito" placeholder="Monto a depositar" required min="1">
+                </div>
+                <button onclick="realizarDeposito()">
+                    <i class="fas fa-check"></i> Depositar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="pagoTarjeta" class="card" style="display: none;">
+                <h2><i class="fas fa-credit-card"></i> Pago Tarjeta de Crédito</h2>
+                <div>
+                    <label for="montoPagoTarjeta">Monto a pagar</label>
+                    <input type="number" id="montoPagoTarjeta" placeholder="Monto a pagar" required min="1">
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="esAbonoCapital">
+                    <label for="esAbonoCapital">Abono a capital</label>
+                </div>
+                <button onclick="realizarPagoTarjeta()">
+                    <i class="fas fa-check"></i> Pagar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="pagoServicio" class="card" style="display: none;">
+                <h2><i class="fas fa-tools"></i> Pago de Servicios</h2>
+                <div>
+                    <label for="tipoServicio">Tipo de Servicio</label>
+                    <select id="tipoServicio" required>
+                        <option value="" disabled selected>Seleccionar servicio</option>
+                        <option value="CFE">CFE</option>
+                        <option value="TELMEX">TELMEX</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="montoPagoServicio">Monto a pagar</label>
+                    <input type="number" id="montoPagoServicio" placeholder="Monto a pagar" required min="1">
+                </div>
+                <button onclick="realizarPagoServicio()">
+                    <i class="fas fa-check"></i> Pagar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="creditoEducativo" class="card" style="display: none;">
+                <h2><i class="fas fa-graduation-cap"></i> Solicitar Crédito Educativo</h2>
+                <div>
+                    <label for="montoCredito">Monto del crédito</label>
+                    <input type="number" id="montoCredito" placeholder="Monto del crédito" required min="1">
+                </div>
+                <div>
+                    <label for="plazoCredito">Plazo en meses</label>
+                    <input type="number" id="plazoCredito" placeholder="Plazo en meses" required min="1">
+                </div>
+                <button onclick="solicitarCreditoEducativo()">
+                    <i class="fas fa-check"></i> Solicitar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="transacciones" class="card" style="display: none;">
+                <h2><i class="fas fa-history"></i> Historial de Transacciones</h2>
+                <div>
+                    <label for="ordenTransacciones">Ordenar por</label>
+                    <select id="ordenTransacciones">
+                        <option value="fecha">Ordenar por Fecha</option>
+                        <option value="monto">Ordenar por Monto</option>
+                    </select>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="ordenAscendente">
+                    <label for="ordenAscendente">Orden ascendente</label>
+                </div>
+                <button onclick="cargarTransacciones()">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
+                <ul id="listaTransacciones"></ul>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+
+            <section id="comprobante" class="card" style="display: none;">
+                <h2><i class="fas fa-print"></i> Imprimir Comprobante</h2>
+                <div>
+                    <label for="tipoOperacionComprobante">Tipo de Operación</label>
+                    <select id="tipoOperacionComprobante" required>
+                        <option value="" disabled selected>Seleccionar operación</option>
+                        <option value="Retiro">Retiro</option>
+                        <option value="Depósito">Depósito</option>
+                        <option value="Pago Tarjeta">Pago Tarjeta</option>
+                        <option value="Pago Servicio">Pago Servicio</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="montoComprobante">Monto</label>
+                    <input type="number" id="montoComprobante" placeholder="Monto" required min="1">
+                </div>
+                <button onclick="imprimirComprobante()">
+                    <i class="fas fa-print"></i> Imprimir y Enviar
+                </button>
+                <button onclick="volverOperaciones()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </section>
+        </main>
+        
+        <div id="notificacion" class="notification" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
